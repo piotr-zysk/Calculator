@@ -12,8 +12,8 @@ namespace Calculator
         {
             decimal DivideResult = (decimal)a / b;
             string DivideResultString = DivideResult.ToString();
-
-            return DivideResultString; //to be changed with calculation result
+            Pattern pattern = FindPattern(DivideResultString);
+            return $"{DivideResultString} -> {pattern.Value}"; //to be changed with calculation result
         }
 
         public Pattern FindPattern(string InputString)

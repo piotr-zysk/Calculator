@@ -15,6 +15,9 @@ namespace Calculator.UnitTests
         public override IEnumerable<object[]> GetData(MethodInfo testMethod)
         {
             yield return new object[] { "0.3333333", "3" };
+            yield return new object[] { "0.10333333", "3" };
+
+
             yield return new object[] { "1.1111111", "1" };
             yield return new object[] { "1.1111112", "" };
             yield return new object[] { "1.0101010", "01" };

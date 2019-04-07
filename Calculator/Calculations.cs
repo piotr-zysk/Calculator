@@ -12,15 +12,65 @@ namespace Calculator
         {
             decimal DivideResult = (decimal)a / b;
             string DivideResultString = DivideResult.ToString();
-            Pattern pattern = FindPattern(DivideResultString);
-            return $"{DivideResultString} -> {pattern.Value}"; //to be changed with calculation result
+
+            var dotPosition = DivideResultString.IndexOf('.');
+            var fraction = DivideResultString.Substring(dotPosition + 1);
+
+            Pattern pattern = FindPattern(fraction);
+
+            string result;
+            if (pattern.Value == "") result = DivideResultString;
+            else result = DivideResultString.Substring(0, dotPosition + 1 + pattern.IndexOf)
+                    + $"({pattern.Value})";
+
+            return $"{DivideResultString} -> {pattern.Value}" +
+                $" -> {result}"; //to be changed with calculation result
         }
 
-        public Pattern FindPattern(string InputString)
+        public Pattern FindPattern(string inputString)
         {
+            int position;
+            var length = 1;
+            string pattern, fractionSincePatternStart;
 
+            for (int i = 0; i< Math.Floor((decimal)inputString.Length/length); i++)
+            {
+                position = i * length;
+                pattern = inputString.Substring(position, length);
+                fractionSincePatternStart = inputString.Substring(position);
 
-            return new Pattern("01", 1);
+                var expectedString = inputString.Substring(0, position)
+                    + string.Concat(Enumerable.Repeat(pattern, ExpectedPatternCount(fractionSincePatternStart, length)))
+                    + ExpectedTail(fractionSincePatternStart, pattern);
+
+                if (inputString == expectedString) return new Pattern(pattern, position);
+            }
+
+            return new Pattern("", 0);
         }
+
+        private int ExpectedPatternCount(string fraction, int patternLength)
+        => (int)Math.Floor((decimal)fraction.Length / patternLength);
+
+        private int TailLength(string fraction, int patternLength)
+            => fraction.Length - (patternLength * ExpectedPatternCount(fraction, patternLength));
+        private string ActualTail(string fraction, int patternLength)
+            => fraction.Substring(patternLength * ExpectedPatternCount(fraction, patternLength));
+           
+        private string ExpectedTail(string fraction, string pattern)
+        {
+            string temp = ActualTail(fraction,pattern.Length);
+            if (temp == "") return "";
+
+            temp += temp;
+            
+            var tempNumber = long.Parse(temp);
+            decimal roundNumber = (decimal)Math
+                    .Round(tempNumber /
+                    Math.Pow(10, temp.Length - TailLength(fraction, pattern.Length)));
+
+            return roundNumber.ToString().PadLeft(TailLength(fraction,pattern.Length), '0');
+        }
+       
     }
 }

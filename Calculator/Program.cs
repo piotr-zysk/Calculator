@@ -10,7 +10,7 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            var result = new Calculations().Run(1, 3);
+            var result = new Calculations().Run(1, 30);
             Console.WriteLine(result);
         }
     }

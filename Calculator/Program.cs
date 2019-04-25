@@ -10,8 +10,22 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            var result = new Calculations().Run(1, 30);
-            Console.WriteLine(result);
+            int A, B;
+
+            try
+            {
+                A = int.Parse(args[0]);
+                B = int.Parse(args[1]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
+
+
+            var result = new Calculations().Divide(A, B);
+            Console.WriteLine($"{A} / {B} = {result}");
         }
     }
 }

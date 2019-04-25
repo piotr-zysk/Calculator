@@ -8,7 +8,7 @@ namespace Calculator
 {
     public class Calculations
     {
-        public string Run(int a, int b)
+        public string Divide(int a, int b)
         {
             decimal DivideResult = (decimal)a / b;
             string DivideResultString = DivideResult.ToString();
@@ -23,10 +23,12 @@ namespace Calculator
             else result = DivideResultString.Substring(0, dotPosition + 1 + pattern.IndexOf)
                     + $"({pattern.Value})";
 
-            return $"{DivideResultString} -> {pattern.Value}" +
-                $" -> {result}"; //to be changed with calculation result
+            return 
+                //$"{DivideResultString} -> recurring '{pattern.Value}' -> " +
+                result;
         }
 
+        // find decimal period
         public Pattern FindPattern(string inputString)
         {
             int position;
